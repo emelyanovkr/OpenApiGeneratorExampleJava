@@ -1,0 +1,111 @@
+openapi: 3.0.3
+info:
+  title: User Management API
+  version: 1.0.0
+  description: Simple API for managing users and their tasks.
+
+servers:
+  - url: http://localhost:8080
+    description: Local server
+
+paths:
+  /users:
+    get:
+      summary: Get list of users
+      operationId: getUsers
+      tags: [ User ]
+      responses:
+        '200':
+          description: List of users
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UserDto'
+
+    post:
+      summary: Create new user
+      operationId: createUser
+      tags: [ User ]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserCreateRequest'
+      responses:
+        '201':
+          description: User created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserDto'
+
+  /users/{userId}/tasks:
+    get:
+      summary: Get tasks for a specific user
+      operationId: getUserTasks
+      tags: [ Task ]
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: List of user tasks
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TaskDto'
+
+components:
+  schemas:
+    UserDto:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: Ivan Petrov
+        email:
+          type: string
+          example: ivan@example.com
+        createdAt:
+          type: string
+          format: date-time
+
+    UserCreateRequest:
+      type: object
+      required: [ name, email ]
+      properties:
+        name:
+          type: string
+          example: Ivan Petrov
+        email:
+          type: string
+          example: ivan@example.com
+
+    TaskDto:
+      type: object
+      properties:
+        id:
+          type: integer
+        title:
+          type: string
+          example: Implement API
+        description:
+          type: string
+          example: Implement backend endpoints for user management
+        status:
+          type: string
+          enum: [ TODO, IN_PROGRESS, DONE ]
+        createdAt:
+          type: string
+          format: date-time
