@@ -5,7 +5,7 @@ plugins {
     id("org.openapi.generator") version "7.16.0"
 }
 
-group = "com.fidd.api"
+group = "com.flower.api"
 version = "1.0.0"
 
 // see https://openapi-generator.tech/docs/generators/spring
@@ -13,9 +13,9 @@ openApiGenerate {
     generatorName.set("spring")
     inputSpec.set("$rootDir/openapi/api.yaml")
     outputDir.set("$buildDir/generated")
-    apiPackage.set("com.fidd.api.controller")
-    modelPackage.set("com.fidd.api.model")
-    invokerPackage.set("com.fidd.api.invoker")
+    apiPackage.set("com.flower.api.controller")
+    modelPackage.set("com.flower.api.model")
+    invokerPackage.set("com.flower.api.invoker")
     // see https://openapi-generator.tech/docs/generators/spring/#config-options
     configOptions.set(
         mapOf(
